@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
@@ -16,8 +18,17 @@ app.use(express.json());
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err.message));
+  .then(() => {
+    console.log("MongoDB connected");
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+  })
+  .catch((err) => {
+    console.error("Mongo connection error:", err);
+    process.exit(1);
+  });
+
+const workoutRoutes = require("./routes/workoutRoutes");
+app.use("/api/workouts", workoutRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Forcix API is running 💪" });
@@ -31,3 +42,5 @@ app.use("/api/guide", guideRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+

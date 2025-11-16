@@ -13,11 +13,7 @@ const Footer = () => {
             Transform your fitness journey with structured strength training,
             smart tracking, and a community that actually cares.
           </p>
-          <div className="footer-socials">
-            <span>🐦</span>
-            <span>📸</span>
-            <span>▶️</span>
-          </div>
+          
         </div>
 
         <div className="footer-columns">
@@ -46,26 +42,29 @@ const Footer = () => {
             <a href="#pricing">Cookies</a>
           </div>
         </div>
+        
       </div>
 
       <div className="footer-contact-row">
-        <div>
-          <span className="footer-contact-label">Email</span>
-          <p>support@forcix.fit</p>
-        </div>
-        <div>
-          <span className="footer-contact-label">Phone</span>
-          <p>+91-98765-43210</p>
-        </div>
-        <div>
-          <span className="footer-contact-label">Location</span>
-          <p>Hyderabad, India</p>
-        </div>
-      </div>
+  <div className="footer-contact-item">
+    <span className="footer-contact-label">Email: support@forcix.fit</span>
+    
+  </div>
 
-      <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Forcix. All rights reserved.</span>
-      </div>
+  <div className="footer-contact-item">
+    <span className="footer-contact-label">Phone: +91-98765-43210</span>
+
+  </div>
+
+  <div className="footer-contact-item">
+    <span className="footer-contact-label">Location: Hyderabad, India</span>
+  </div>
+</div>
+
+<div className="footer-bottom">
+  <span>© {new Date().getFullYear()} Forcix. All rights reserved.</span>
+</div>
+
     </footer>
   );
 };

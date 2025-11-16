@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [user, setUser] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
 
@@ -13,9 +19,7 @@ const Navbar = () => {
       setUser(stored ? JSON.parse(stored) : null);
     };
 
-    syncUser(); // initial load
-
-    // listen for "forcix_user_updated" fired from Pricing.jsx
+    syncUser();
     window.addEventListener("forcix_user_updated", syncUser);
 
     return () => {
@@ -32,6 +36,29 @@ const Navbar = () => {
 
   const currentPlanLabel = user?.currentPlan || "No active plan";
 
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // For About / Features / Pricing – always go to home then scroll
+  const handleSectionClick = (sectionId) => {
+    setShowProfile(false);
+
+    if (location.pathname !== "/") {
+      navigate("/");
+      // small delay so home mounts, then scroll
+      setTimeout(() => scrollToSection(sectionId), 100);
+    } else {
+      scrollToSection(sectionId);
+    }
+  };
+
+  const navLinkClass = ({ isActive }) =>
+    "nav-link" + (isActive ? " nav-link-active" : "");
+
   return (
     <header className="navbar">
       <div
@@ -46,13 +73,33 @@ const Navbar = () => {
       </div>
 
       <nav className="nav-links">
-        <NavLink to="/" end>
+        <NavLink to="/" end className={navLinkClass}>
           Home
         </NavLink>
-        <a href="#about">About</a>
-        <NavLink to="/workouts">Workouts</NavLink>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
+
+        <button
+          type="button"
+          className="nav-link nav-link-button"
+          onClick={() => handleSectionClick("about")}
+        >
+          About
+        </button>
+
+        <NavLink to="/workouts" className={navLinkClass}>
+          Workouts
+        </NavLink>
+
+        <NavLink to="/bmi" className={navLinkClass}>
+          BMI
+        </NavLink>
+
+        <button
+          type="button"
+          className="nav-link nav-link-button"
+          onClick={() => handleSectionClick("pricing")}
+        >
+          Pricing
+        </button>
       </nav>
 
       <div className="nav-right">

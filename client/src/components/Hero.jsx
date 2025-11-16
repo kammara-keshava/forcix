@@ -32,7 +32,7 @@ const Hero = () => {
 
   <a
     className="btn-ghost"
-    href="https://www.w3schools.com/html/mov_bbb.mp4"
+    href="https://res.cloudinary.com/dmi3gyqoo/video/upload/v1763288530/NO_LIMITS_-_Gym_Motivation_twb17v.mp4"
     target="_blank"
     rel="noreferrer"
   >
